@@ -12,7 +12,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
-    name: 'MyInput',
+    name: 'ReviewInput',
     components: {},
     setup(props, { emit }) {
         

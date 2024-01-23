@@ -1,29 +1,20 @@
 <template>
-    <div v-if="!(filePath === '#')" class="preview-file">
+    <div v-if="!(store.previewFilePath === '#')" class="preview-file">
         <p>Ваше фото:</p>
-        <img :src="filePath" alt="Фото">
+        <img :src="store.previewFilePath" alt="Фото">
     </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent } from 'vue';
+import { useReviewStore } from '../store/ReviewStore'
 export default defineComponent({
     name: 'PreviewPhoto',
     components: {},
-    props: {
-        filePath: {
-            required: true,
-            type: String
-        }
-    },
-    setup(props, { emit }) {
+    setup() {
 
-        const reviewText = ref<string>('')
+        const store = useReviewStore()
 
-        const handleText = () => {
-            emit('update:modelValue', reviewText.value);
-        }
-
-        return { reviewText, handleText }
+        return {store}
     }
 })
 </script>

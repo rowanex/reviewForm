@@ -1,21 +1,21 @@
 <template>
     <div class="review-container">
-      <form @submit.prevent="submitForm" class="review-form">
+      <form @submit.prevent="store.submitForm" class="review-form">
         <div class="review-form-group">
-          <ReviewInput v-model="review.name"/>
+          <ReviewInput v-model="store.review.name"/>
         </div>
   
         <div class="review-form-group">
-          <ReviewTextarea v-model="review.reviewText"/>
+          <ReviewTextarea v-model="store.review.reviewText"/>
         </div>
   
         <div class="review-form-group">
-          <ReviewRating v-model="review.grade"/>
+          <ReviewRating v-model="store.review.grade"/>
         </div>
   
         <div class="review-form-group">
-          <ReviewInputFile v-model="review.photo"/>
-          <PreviewPhoto :filePath="previewFilePath"/>
+          <ReviewInputFile v-model="store.review.photo"/>
+          <PreviewPhoto/>
         </div>
         <button type="submit" class="review-submit-btn">Отправить отзыв</button>
       </form>
@@ -23,9 +23,8 @@
   </template>
   
   <script lang="ts">
-  import { computed, defineComponent, ref } from 'vue';
-  import axios from 'axios';
-  import Review from '@/interfaces/review'
+  import { defineComponent } from 'vue';
+  import { useReviewStore } from '../store/ReviewStore'
   import ReviewInput from '@/components/ReviewInput.vue';
   import ReviewTextarea from '@/components/ReviewTextarea.vue';
   import ReviewRating from '@/components/ReviewRating.vue';
@@ -42,51 +41,11 @@
       PreviewPhoto
     },
     setup() {
+    
+        const store = useReviewStore();
+        
   
-      const review = ref<Review>({
-        name: '',
-        reviewText: '',
-        grade: null,
-        photo: null
-      });
-  
-      const submitForm = async () => {
-        try {
-          const response = await axios.post('/api/random-url/', createFormData(review.value), {
-            headers: {
-              'Content-Type': 'multipart/form-data'
-            }
-          })
-          console.log(response);
-        } catch (error) {
-          console.error(`Network error ${error}`)
-        }
-      }
-  
-      const createFormData = (data: Review): FormData => {
-        const formData = new FormData;
-  
-        for (const key in data) {
-          const value = data[key as keyof Review];
-          if (value instanceof File) {
-            formData.append(key, value);
-          } else {
-            formData.append(key, String(value));
-          }
-        }
-        return formData;
-      }
-  
-      const previewFilePath = computed(() => {
-        if (review.value.photo) {
-          return URL.createObjectURL(review.value.photo);
-        }
-        else {
-          return '#'
-        }
-      })
-  
-      return { review, submitForm, previewFilePath }
+      return { store }
     }
   });
   </script>
