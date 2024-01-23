@@ -2,11 +2,11 @@
     <div class="review-container">
       <form @submit.prevent="submitForm" class="review-form">
         <div class="review-form-group">
-          <MyInput v-model="review.name"/>
+          <ReviewInput v-model="review.name"/>
         </div>
   
         <div class="review-form-group">
-          <MyTextarea v-model="review.reviewText"/>
+          <ReviewTextarea v-model="review.reviewText"/>
         </div>
   
         <div class="review-form-group">
@@ -14,7 +14,7 @@
         </div>
   
         <div class="review-form-group">
-          <MyInputFile v-model="review.photo"/>
+          <ReviewInputFile v-model="review.photo"/>
           <PreviewPhoto :filePath="previewFilePath"/>
         </div>
         <button type="submit" class="review-submit-btn">Отправить отзыв</button>
@@ -26,19 +26,19 @@
   import { computed, defineComponent, ref } from 'vue';
   import axios from 'axios';
   import Review from '@/interfaces/review'
-  import MyInput from '@/components/MyInput.vue';
-  import MyTextarea from '@/components/MyTextarea.vue';
+  import ReviewInput from '@/components/ReviewInput.vue';
+  import ReviewTextarea from '@/components/ReviewTextarea.vue';
   import ReviewRating from '@/components/ReviewRating.vue';
-  import MyInputFile from '@/components/MyInputFile.vue';
+  import ReviewInputFile from '@/components/ReviewInputFile.vue';
   import PreviewPhoto from '@/components/PreviewPhoto.vue'
   
   export default defineComponent({
     name: 'ReviewForm',
     components: {
-      MyInput,
-      MyTextarea,
+      ReviewInput,
+      ReviewTextarea,
       ReviewRating,
-      MyInputFile,
+      ReviewInputFile,
       PreviewPhoto
     },
     setup() {

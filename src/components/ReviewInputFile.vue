@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 export default defineComponent({
-    name: 'MyInputFile',
+    name: 'ReviewInputFile',
     components: {},
     setup(props, { emit }) {
 
